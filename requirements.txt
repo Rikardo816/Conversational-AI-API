@@ -5,3 +5,6 @@ pydub
 openai
 python-dotenv
 langchain_community
+speechrecognition
+langchain-openai
+gtts
