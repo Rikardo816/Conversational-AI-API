@@ -128,8 +128,6 @@ dmypy.json
 *.pid
 *.seed
 *.pid.lock
-**/Dockerfile
-**/docker-compose.yml
 
 # Pydub
 *.mp3
