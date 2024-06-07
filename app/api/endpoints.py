@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, File, UploadFile, Form
 from fastapi.responses import JSONResponse, FileResponse
-from app.core.conversation_manager import process_text, get_conversation_history
-from app.core.audio_processing import process_audio
+from app.services.conversation_manager import process_text, get_conversation_history
+from app.services.audio_processing import process_audio
 from typing import Optional
 
 router = APIRouter()

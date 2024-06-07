@@ -12,6 +12,13 @@ Este proyecto implementa un sistema conversacional utilizando un Large Language 
 - Docker
 
 ## Cómo Ejecutar
+Antes que nada cree un archivo `.env` en la raiz del proyecto y añada las variables de entorno dentro de el, justo como se muestra acontinuación:
+```
+OPENAI_API_KEY=su_clave_openai
+OPENAI_MODEL=gpt-3.5-turbo
+``` 
+Reemplaze `su_clave_openai` por la que usted posea, si no tiene una puede crearla en [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+
 ### Local
 1. Clonar el repositorio.
 2. Crear un entorno virtual e instalar las dependencias:
