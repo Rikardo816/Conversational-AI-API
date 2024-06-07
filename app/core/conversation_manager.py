@@ -1,32 +1,11 @@
-from typing import Optional
-import os
-import logging
+from app.core.config import redis_client, openai_api_key
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI
-from redis import Redis
 from langchain_community.chat_message_histories import RedisChatMessageHistory
-from fastapi import APIRouter, Request, File, UploadFile, Form
-from fastapi.responses import JSONResponse, FileResponse
+import logging
 
-router = APIRouter()
 
-# Configurar la API Key de OpenAI
-openai_api_key = os.getenv('OPENAI_API_KEY')
-
-if not openai_api_key:
-    raise ValueError("OpenAI API key not set. Please set the OPENAI_API_KEY environment variable.")
-
-# Conectar a Redis
-try:
-    redis_client = Redis(host='redis', port=6379, db=0)
-    redis_client.ping()
-    logging.info("Connected to Redis successfully.")
-except Exception as e:
-    logging.error(f"Could not connect to Redis: {e}")
-    raise ConnectionError("Could not connect to Redis. Ensure Redis is running.") from e
-
-# Definir el prompt de la conversación
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", "You're an assistant."),
@@ -70,12 +49,11 @@ async def process_text(user_text, conversation_id):
         # Procesar la respuesta
         response = chain_with_history.invoke({"question": user_text}, config=config)
         
-        # Asegurarse de que la respuesta sea serializable
+        # Convertir la respuesta a un formato serializable
         serializable_response = make_serializable(response)
         
         return serializable_response
     except Exception as e:
-        # Manejar errores y retornar un mensaje de error
         logging.error(f"Error processing text: {e}")
         return {"error": str(e)}
 

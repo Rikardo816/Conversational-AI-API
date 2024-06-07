@@ -21,6 +21,7 @@ openai_api_key = os.getenv('OPENAI_API_KEY')
 if not openai_api_key:
     raise ValueError("No OPENAI_API_KEY found in environment variables")
 
+# Convertir el archivo de audio a texto
 def audio_to_text(audio_data: bytes):
     recognizer = sr.Recognizer()
     audio_file = sr.AudioFile(io.BytesIO(audio_data))
@@ -36,6 +37,7 @@ def audio_to_text(audio_data: bytes):
         logger.error(f"Could not request results from Google Speech Recognition service; {e}")
         return ""
 
+# Convertir el archivo de audio a formato WAV
 def convert_to_wav(file: UploadFile):
     audio = AudioSegment.from_file(file.file, format=file.filename.split('.')[-1])
     wav_io = io.BytesIO()
@@ -43,6 +45,7 @@ def convert_to_wav(file: UploadFile):
     wav_io.seek(0)
     return wav_io.read()
 
+# Convertir texto a audio
 def text_to_audio(text: str, format: str = "wav"):
     logger.debug(f"Converting text to audio: {text}")
     # Utilizar gTTS para convertir texto a audio y trabajar en memoria
@@ -63,6 +66,7 @@ def text_to_audio(text: str, format: str = "wav"):
     
     return audio_io.getvalue()
 
+# Procesar el audio y generar una respuesta
 async def process_audio(file, conversation_id):
     # Convertir el archivo de audio a texto
     wav_data = convert_to_wav(file)

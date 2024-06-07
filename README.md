@@ -12,7 +12,7 @@ Este proyecto implementa un sistema conversacional utilizando un Large Language 
 - Docker
 
 ## Cómo Ejecutar
-
+### Local
 1. Clonar el repositorio.
 2. Crear un entorno virtual e instalar las dependencias:
     ```bash
@@ -24,16 +24,15 @@ Este proyecto implementa un sistema conversacional utilizando un Large Language 
     ```bash
     uvicorn app.main:app --reload
     ```
-4. Construir y ejecutar con Docker:
+### Con Docker (recomendado)
+1. Construir y ejecutar con Docker:
     ```bash
     docker-compose up --build
     ```
 
 ## Endpoints
 
-- `POST /upload-audio/`: Subir un archivo de audio y obtener una respuesta en audio.
-- `POST /converse/`: Enviar texto y recibir una respuesta en texto.
+- `POST /conversation/`: Subir texto o archivo de audio, si se sube un audio la respuesta será en audio de lo contrario será en texto.
 
 ## Documentación API
-
 La documentación de la API está disponible en `/docs` (Swagger) y `/redoc`.
