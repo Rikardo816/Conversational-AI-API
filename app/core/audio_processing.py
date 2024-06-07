@@ -6,7 +6,7 @@ from pydub import AudioSegment
 from fastapi import UploadFile
 from gtts import gTTS
 from langchain_openai import OpenAI
-from app.services.conversation_history import save_message
+# from app.services.conversation_history import save_message
 
 # Configurar logging
 logger = logging.getLogger(__name__)
