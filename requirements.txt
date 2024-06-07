@@ -8,3 +8,4 @@ langchain_community
 speechrecognition
 langchain-openai
 gtts
+redis

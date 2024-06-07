@@ -6,6 +6,7 @@ from pydub import AudioSegment
 from fastapi import UploadFile
 from gtts import gTTS
 from langchain_openai import OpenAI
+from app.services.conversation_history import save_message
 
 # Configurar logging
 logger = logging.getLogger(__name__)
@@ -62,13 +63,16 @@ def text_to_audio(text: str, format: str = "wav"):
     
     return audio_io.getvalue()
 
-async def process_audio(file: UploadFile):
+async def process_audio(file, conversation_id):
+    # Convertir el archivo de audio a texto
     wav_data = convert_to_wav(file)
     text = audio_to_text(wav_data)
     logger.debug(f"Transcribed Text: {text}")
     if not text:
         return text_to_audio("Could not transcribe the audio", format="wav")
     
+    # save_message(conversation_id, "user", text)
+
     # Especificar el modelo al inicializar OpenAI
     llm = OpenAI(api_key=openai_api_key)
     
@@ -91,6 +95,7 @@ async def process_audio(file: UploadFile):
     else:
         response_text = "No response from the model."
 
+    # save_message(conversation_id, "system", response_text)
     logger.debug(f"Generated Response Text: {response_text}")
     audio_file = text_to_audio(response_text, format="wav")
     logger.debug(f"Generated Audio File Length: {len(audio_file)} bytes")
