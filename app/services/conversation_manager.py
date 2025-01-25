@@ -14,10 +14,8 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Crear una instancia del modelo de lenguaje
 llm = ChatOpenAI(api_key=openai_api_key)
 
-# Crear la cadena de procesamiento con el historial de mensajes
 chain = prompt | llm
 chain_with_history = RunnableWithMessageHistory(
     chain,
@@ -43,13 +41,10 @@ def make_serializable(obj):
 
 async def process_text(user_text, conversation_id):
     try:
-        # Configurar la cadena con el ID de la conversación
         config = {"configurable": {"session_id": conversation_id}}
         
-        # Procesar la respuesta
         response = chain_with_history.invoke({"question": user_text}, config=config)
         
-        # Convertir la respuesta a un formato serializable
         serializable_response = make_serializable(response)
         
         return serializable_response

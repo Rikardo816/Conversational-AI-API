@@ -9,3 +9,6 @@ speechrecognition
 langchain-openai
 gtts
 redis
+python-multipart
+websockets==12.0
+uvicorn[standard]
